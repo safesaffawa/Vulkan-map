@@ -13,7 +13,6 @@ public class MixinXaeroWorldMapRegionTexture {
     @Inject(method = "ensureUnpackPBO", at = @At("HEAD"), cancellable = true, remap = false)
     private void xvcompat$onEnsureUnpackPBO(CallbackInfo ci) {
         if (XaeroVulkanCompat.VULKAN_ACTIVE) {
-            // 禁用 PBO 创建，避免 VulkanMod 的 bug
             ci.cancel();
         }
     }
@@ -26,10 +25,9 @@ public class MixinXaeroWorldMapRegionTexture {
     }
 
     @Inject(method = "uploadBuffer", at = @At("HEAD"), cancellable = true, remap = false)
-    private void xvcompat$onUploadBuffer(CallbackInfo ci) {
+    private void xvcompat$onUploadBuffer(CallbackInfoReturnable<Boolean> cir) {
         if (XaeroVulkanCompat.VULKAN_ACTIVE) {
-            // 跳过缓冲区上传，使用备选路径
-            ci.cancel();
+            cir.setReturnValue(false);
         }
     }
 }
