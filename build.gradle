@@ -12,6 +12,10 @@ base {
 
 repositories {
     maven {
+        name = "Fabric"
+        url = "https://maven.fabricmc.net/"
+    }
+    maven {
         name = "Xaero's Mods"
         url = "https://maven.xaero.realmofterrafirma.com"
     }
@@ -29,13 +33,13 @@ repositories {
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    // 按照官方文档：modImplementation → implementation
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-    // 暂时注释 Xaero 和 VulkanMod 依赖
-    // compileOnly "xaero.minimap:XaerosMinimap-Fabric:${project.xaero_minimap_version}"
-    // compileOnly "xaero.worldmap:XaerosWorldMap-Fabric:${project.xaero_worldmap_version}"
-    // compileOnly "com.github.xCollateral:VulkanMod:${project.vulkanmod_version}"
+    compileOnly "xaero.minimap:XaerosMinimap-Fabric:${project.xaero_minimap_version}"
+    compileOnly "xaero.worldmap:XaerosWorldMap-Fabric:${project.xaero_worldmap_version}"
+    compileOnly "com.github.xCollateral:VulkanMod:${project.vulkanmod_version}"
 }
 
 processResources {
@@ -51,14 +55,12 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 java {
-    // 使用 toolchain 确保 Java 25 编译
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)
     }
     withSourcesJar()
 }
 
-// 26.1 中 remapJar 已被 jar 替代
 jar {
     from("LICENSE") {
         rename { "${it}_${project.archives_base_name}" }
