@@ -6,12 +6,13 @@
   "mixins": [],
   "client": [
     "MixinXaeroMinimapRenderer",
+    "MixinXaeroWorldMapMapLimiter"
     "MixinXaeroWorldMapRenderer",
     "MixinXaeroMapFramebuffer",
     "MixinXaeroRadarRenderer",
     "MixinVulkanRenderPassCompat"
   ],
   "injectors": {
-    "defaultRequire": 1
+    "defaultRequire": 0
   }
 }
