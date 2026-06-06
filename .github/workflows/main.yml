@@ -12,17 +12,20 @@ jobs:
         with:
           submodules: true
       
+      # Gradle 自身用 Java 21 运行
       - name: Setup JDK 21 for Gradle
         uses: actions/setup-java@v4
         with:
           distribution: microsoft
           java-version: 21
       
+      # 使用 Gradle 9.5.1
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 9.5.1
       
+      # Loom toolchain 会自动下载 Java 25 进行编译
       - name: Build with Gradle
         run: gradle clean build
       
