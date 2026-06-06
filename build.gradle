@@ -33,13 +33,13 @@ repositories {
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     
-    // 按照官方文档：modImplementation → implementation
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-    compileOnly "xaero.minimap:XaerosMinimap-Fabric:${project.xaero_minimap_version}"
-    compileOnly "xaero.worldmap:XaerosWorldMap-Fabric:${project.xaero_worldmap_version}"
-    compileOnly "com.github.xCollateral:VulkanMod:${project.vulkanmod_version}"
+    // 暂时注释 - Xaero 仓库无法访问
+    // compileOnly "xaero.minimap:XaerosMinimap-Fabric:${project.xaero_minimap_version}"
+    // compileOnly "xaero.worldmap:XaerosWorldMap-Fabric:${project.xaero_worldmap_version}"
+    // compileOnly "com.github.xCollateral:VulkanMod:${project.vulkanmod_version}"
 }
 
 processResources {
