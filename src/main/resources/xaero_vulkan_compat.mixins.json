@@ -10,7 +10,9 @@
     "MixinXaeroWorldMapRenderer",
     "MixinXaeroMapFramebuffer",
     "MixinXaeroRadarRenderer",
-    "MixinVulkanRenderPassCompat"
+    "MixinVulkanRenderPassCompat",
+    "MixinXaeroWorldMapRegionTexture",
+    "MixinXaeroWorldMapLeafRegionTexture"
   ],
   "injectors": {
     "defaultRequire": 0
