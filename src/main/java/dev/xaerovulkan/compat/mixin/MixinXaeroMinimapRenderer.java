@@ -1,8 +1,8 @@
 package dev.xaerovulkan.compat.mixin;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import dev.xaerovulkan.compat.XaeroVulkanCompat;
 import dev.xaerovulkan.compat.render.VulkanCompatRenderManager;
-import net.minecraft.client.util.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,7 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MixinXaeroMinimapRenderer {
 
     /**
-     * Injected at the head of {@code render(MatrixStack, float, ...)} —
+     * Injected at the head of {@code render(PoseStack, float, ...)} —
      * the main per-frame HUD draw method.
      *
      * <p>Ends any active Vulkan render pass so the minimap framebuffer
@@ -39,7 +39,7 @@ public abstract class MixinXaeroMinimapRenderer {
             at = @At("HEAD"),
             require = 0   // Non-fatal if Xaero Minimap is absent
     )
-    private void xvcompat$onRenderHead(CallbackInfo ci) {
+    private void xvcompat$onRenderHead(PoseStack poseStack, CallbackInfo ci) {
         if (XaeroVulkanCompat.VULKAN_ACTIVE) {
             VulkanCompatRenderManager.beginXaeroRenderSection();
         }
