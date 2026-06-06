@@ -1,0 +1,55 @@
+# .github/workflows/build.yml
+
+name: Build Fabric Mod
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  MINECRAFT_VERSION: 26.1
+  JAVA_VERSION: 25
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Validate Gradle Wrapper
+        uses: gradle/actions/wrapper-validation@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: microsoft
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Make Gradle Wrapper Executable
+        if: runner.os != 'Windows'
+        run: chmod +x ./gradlew
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build with Gradle
+        run: ./gradlew clean build
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: fabric-mod-jar
+          path: build/libs/*.jar
