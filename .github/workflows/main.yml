@@ -1,6 +1,6 @@
 # .github/workflows/build.yml
 
-name: Build！
+name: Build Fabric Mod
 
 on:
   workflow_dispatch:
@@ -28,14 +28,13 @@ jobs:
           distribution: microsoft
           java-version: ${{ env.JAVA_VERSION }}
 
-      - name: Generate Gradle Wrapper
-        run: |
-          if [ ! -f gradlew ]; then
-            gradle wrapper
-          fi
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.13
 
       - name: Make Gradle Wrapper Executable
-        run: chmod +x gradlew
+        run: chmod +x gradlew 2>/dev/null || true
 
       - name: Cache Gradle
         uses: actions/cache@v4
@@ -48,7 +47,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Build with Gradle
-        run: ./gradlew clean build
+        run: gradle clean build
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
