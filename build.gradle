@@ -1,5 +1,5 @@
 plugins {
-    id 'net.fabricmc.fabric-loom' version '1.15.0'
+    id 'net.fabricmc.fabric-loom' version '1.16.0-alpha.5'
     id 'maven-publish'
 }
 
@@ -27,14 +27,21 @@ repositories {
 }
 
 dependencies {
+    // 26.1 不需要 mappings 行，直接引用 minecraft
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     
+    // 注意：modImplementation 改为 implementation（26.1 官方要求）
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modCompileOnly "xaero.minimap:XaerosMinimap-Fabric:${project.xaero_minimap_version}"
-    modCompileOnly "xaero.worldmap:XaerosWorldMap-Fabric:${project.xaero_worldmap_version}"
-    modCompileOnly "com.github.xCollateral:VulkanMod:${project.vulkanmod_version}"
+    // Xaero's Minimap
+    compileOnly "xaero.minimap:XaerosMinimap-Fabric:${project.xaero_minimap_version}"
+    
+    // Xaero's World Map
+    compileOnly "xaero.worldmap:XaerosWorldMap-Fabric:${project.xaero_worldmap_version}"
+    
+    // VulkanMod
+    compileOnly "com.github.xCollateral:VulkanMod:${project.vulkanmod_version}"
 }
 
 processResources {
@@ -50,12 +57,14 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 java {
+    // 使用 toolchain 确保 Java 25 编译
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)
     }
     withSourcesJar()
 }
 
+// 26.1 中 remapJar 已被 jar 替代
 jar {
     from("LICENSE") {
         rename { "${it}_${project.archives_base_name}" }
