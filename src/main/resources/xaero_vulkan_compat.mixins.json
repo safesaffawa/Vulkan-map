@@ -6,7 +6,7 @@
   "mixins": [],
   "client": [
     "MixinXaeroMinimapRenderer",
-    "MixinXaeroWorldMapMapLimiter"
+    "MixinXaeroWorldMapMapLimiter",
     "MixinXaeroWorldMapRenderer",
     "MixinXaeroMapFramebuffer",
     "MixinXaeroRadarRenderer",
