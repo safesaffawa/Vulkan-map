@@ -68,7 +68,7 @@ public class XaeroVulkanCompat implements ClientModInitializer {
         // Tick hook: re-validate render state once per second in case Vulkan
         // pipeline is recreated (e.g., after window resize / fullscreen toggle).
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (VULKAN_ACTIVE && client.world != null) {
+            if (VULKAN_ACTIVE && client.level != null) {
                 VulkanCompatRenderManager.onClientTick();
             }
         });
