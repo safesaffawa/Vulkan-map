@@ -1,7 +1,7 @@
 package dev.xaerovulkan.compat.render;
 
 import dev.xaerovulkan.compat.XaeroVulkanCompat;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 /**
  * Central render manager that coordinates safe Vulkan render-pass transitions
